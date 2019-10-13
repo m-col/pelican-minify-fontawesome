@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
-"""
-minify-fontawesome - A plugin for the pelican static site generator that
-extracts only icons used in your website from fontawesome source files to
-copies them to the output folder to lighten served fontawesome files.
-
-To use, set MINIFY_FONTAWESOME in your pelican config to a locally downloaded
-fontawesome icon folder (e.g. '/home/user/fontawesome-free-5.11.2-web').
-
-These can be downloaded from https://fontawesome.com/download (the web fonts).
-
-It also requires that fontforge is installed.
-
-This will save the css file into output_path/static/css/fa.css, and fonts into
-output_path/static/webfonts/.
-
-To use it, something like this should be added to html headers:
-    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/fa.css"/>
-"""
+#
+# pelican-minify-fontawesome
+# 
+# Copyright (C) 2019 mcol@posteo.net
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 import fontforge as ff
