@@ -18,7 +18,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-import fontforge as ff
+import fontforge
 import os
 from pelican import signals
 import re
@@ -28,26 +28,28 @@ def copy_glyphs(source, dest, css_blocks):
     """
     Copy only used icons from the font files into the output folder.
     """
-    used_icons = []
+    icons = []
     for block in css_blocks:
-        used_icons.append(re.search('content:"(.*?)"', block).group(0))
+        match = re.findall('\.fa-(.*?):', block)
+        icons.append(match[0])
 
-    return  #TODO
+    os.mkdir(dest)
+    icons = ['rss']
     for root, dirs, files in os.walk(source):
         for f in files:
             if f.endswith('woff'):
-                font = ff.open(os.path.join(root, f))
-                for icon in used_icons:
-                    if font.findEncodingSlot(icon):
-                        font.selection.select(
-                            ("more", None),
-                            icon,
-                        )
-                font.copy()
-                new_font = ff.font()
-                new_font.paste()
-                new_font.fontname = font.fontname
-                new_font.generate(os.path.join(dest, f))
+                font = fontforge.open(os.path.join(root, f))
+
+                try:
+                    font.selection.select(("more",), *icons)
+                except ValueError:
+                    font.close()
+                    continue
+
+                font.selection.invert()
+                font.clear()
+                font.generate(os.path.join(dest, f))
+                font.close()
 
 
 def get_classes(folder):
@@ -113,7 +115,7 @@ def main(instance):
 
     copy_glyphs(
         os.path.join(FONT_PATH, 'webfonts'),
-        os.path.join(output_path, 'static', 'webfonts'),
+        os.path.join(output_path, 'theme', 'webfonts'),
         css_blocks,
     )
 
