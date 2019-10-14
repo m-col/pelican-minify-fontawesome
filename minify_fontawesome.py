@@ -85,6 +85,12 @@ def copy_css(output_path, css_file):
         contents = fd.read()
 
     base_css = re.sub('\.fa-[\w-]+:before.*?}', '', contents)
+    for string in ['brands-400', 'regular-400', 'solid-900']:
+        base_css = re.sub(
+            f'src:url\(\.\./webfonts/fa-{string}\.eot\).*?\}}',
+            f'src:url(../webfonts/fa-{string}.woff) format("woff")}}',
+            base_css
+        )
 
     css_blocks = []
     for cls in get_classes(output_path):
