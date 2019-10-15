@@ -34,21 +34,23 @@ def copy_glyphs(source, dest, css_blocks):
         icons.append(match[0])
 
     os.mkdir(dest)
-    icons = ['rss']
     for root, dirs, files in os.walk(source):
         for f in files:
             if f.endswith('woff'):
                 font = fontforge.open(os.path.join(root, f))
 
-                try:
-                    font.selection.select(("more",), *icons)
-                except ValueError:
-                    font.close()
-                    continue
+                selected = False
+                for icon in icons:
+                    try:
+                        font.selection.select(("more",), icon)
+                        selected = True
+                    except ValueError:
+                        pass
 
-                font.selection.invert()
-                font.clear()
-                font.generate(os.path.join(dest, f))
+                if selected:
+                    font.selection.invert()
+                    font.clear()
+                    font.generate(os.path.join(dest, f))
                 font.close()
 
 
