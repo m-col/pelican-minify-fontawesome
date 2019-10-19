@@ -1,27 +1,30 @@
 # -*- coding: utf-8 -*-
 #
 # pelican-minify-fontawesome
-# 
+#
 # Copyright (C) 2019 mcol@posteo.net
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 import fontforge
 import os
-from pelican import signals
 import re
+
+from docutils import nodes
+from docutils.parsers.rst import roles
+from pelican import signals
 
 
 def copy_glyphs(source, dest, css_blocks):
@@ -69,7 +72,7 @@ def get_classes(folder):
                     if matches:
                         for match in matches:
                             all_classes.extend(match.split())
-    
+
     for cls in set(all_classes):
         if cls.startswith('fa'):
             fa_classes.append(cls)
@@ -108,7 +111,7 @@ def copy_css(output_path, css_file):
     return css_blocks
 
 
-def main(instance):
+def output_font(instance):
     FONT_PATH = instance.settings.get('MINIFY_FONTAWESOME', None)
     if not FONT_PATH or not os.path.isdir(FONT_PATH):
         return
@@ -128,5 +131,9 @@ def main(instance):
     )
 
 
+def rst_span(name, rawtext, text, lineno, inliner, options={}, content=[]):
+    return [nodes.raw('', f'<span class="{text}"></span>', format='html')], []
+
 def register():
-    signals.finalized.connect(main)
+    roles.register_local_role('fa', rst_span)
+    signals.finalized.connect(output_font)
