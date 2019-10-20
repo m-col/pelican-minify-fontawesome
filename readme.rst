@@ -32,4 +32,16 @@ headers, i.e. put this into page templates:
 
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/fa.css"/>
 
-This has only been tested with fontawesome-free-5.11.2-web so far.
+RST roles
+---------
+
+This plugin also adds 3 small RST roles that can be used to include font
+awesome icons in RST drafts:
+
+.. code-block:: RST
+
+   Here is a solid icon :fas:`blender-phone`
+   Here is a regular icon :far:`meh-rolling-eyes`
+   Here is a brand icon :fab:`github`
+
+This plugin has only been tested with fontawesome-free-5.11.2-web so far.

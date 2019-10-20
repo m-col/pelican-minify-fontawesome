@@ -152,5 +152,4 @@ def register():
     # Register font awesome RST roles
     roles.register_local_role('fas', rst_span)
     roles.register_local_role('far', rst_span)
-    roles.register_local_role('fal', rst_span)
     roles.register_local_role('fab', rst_span)
