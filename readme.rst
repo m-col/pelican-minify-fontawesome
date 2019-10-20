@@ -44,4 +44,13 @@ awesome icons in RST drafts:
    Here is a regular icon :far:`meh-rolling-eyes`
    Here is a brand icon :fab:`github`
 
+Troubleshooting
+---------------
+
+If you are writing using the local devserver and new fonts are not showing in
+your draft, your browser has likely cached an older version of the generated
+font. Many browsers have a way to force a refresh of all requests, including
+fonts, which will fix this. In Firefox this is Ctrl-F5 instead of just F5 to
+refresh.
+
 This plugin has only been tested with fontawesome-free-5.11.2-web so far.
