@@ -56,10 +56,12 @@ def copy_glyphs(source, dest, css_blocks):
                     font.generate(os.path.join(dest, f))
                 font.close()
 
+    print(f'Font Awesome icons incorporated: {icons}')
 
 def get_classes(folder):
     """
-    Gets a list of CSS classes defined in all html files within a folder.
+    Gets a list of font awesome CSS classes defined in all html files within a
+    folder i.e. those beginning with 'fa'.
     """
     fa_classes = []
     all_classes = []
@@ -112,6 +114,10 @@ def copy_css(output_path, css_file):
 
 
 def output_font(instance):
+    """
+    Main function that identifies used icons and copies their CSS and font
+    definitions into the output folder.
+    """
     FONT_PATH = instance.settings.get('MINIFY_FONTAWESOME', None)
     if not FONT_PATH or not os.path.isdir(FONT_PATH):
         return
@@ -132,8 +138,19 @@ def output_font(instance):
 
 
 def rst_span(name, rawtext, text, lineno, inliner, options={}, content=[]):
-    return [nodes.raw('', f'<span class="{text}"></span>', format='html')], []
+    """
+    A RST role that replaces inline glyphs e.g. :fas:`cat` with the appropriate
+    HTML span tag.
+    """
+    return [nodes.raw('', f'<span class="{name} fa-{text}"></span>', format='html')], []
+
 
 def register():
-    roles.register_local_role('fa', rst_span)
+    # Register main program
     signals.finalized.connect(output_font)
+
+    # Register font awesome RST roles
+    roles.register_local_role('fas', rst_span)
+    roles.register_local_role('far', rst_span)
+    roles.register_local_role('fal', rst_span)
+    roles.register_local_role('fab', rst_span)
