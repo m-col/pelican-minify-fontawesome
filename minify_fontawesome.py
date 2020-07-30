@@ -36,7 +36,8 @@ def copy_glyphs(source, dest, css_blocks):
         match = re.findall('\.fa-(.*?):', block)
         icons.append(match[0])
 
-    os.mkdir(dest)
+    if not os.path.isdir(dest):
+        os.mkdir(dest)
     for root, dirs, files in os.walk(source):
         for f in files:
             if f.endswith('woff'):
