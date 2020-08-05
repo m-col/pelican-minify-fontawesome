@@ -32,6 +32,16 @@ headers, i.e. put this into page templates:
 
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/fa.css"/>
 
+Additional icons
+----------------
+
+Additional icons that aren't found in your articles can be added using a list
+of their corresponding CSS references and this variable name:
+
+.. code-block:: python
+
+   FONTAWESOME_EXTRA = ['fa-rss', 'fa-poo-storm']
+
 RST roles
 ---------
 

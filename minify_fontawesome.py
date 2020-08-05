@@ -59,12 +59,12 @@ def copy_glyphs(source, dest, css_blocks):
 
     print(f'Font Awesome icons incorporated: {icons}')
 
-def get_classes(folder):
+def get_classes(folder, extra_icons):
     """
     Gets a list of font awesome CSS classes defined in all html files within a
     folder i.e. those beginning with 'fa'.
     """
-    fa_classes = []
+    fa_classes = extra_icons if extra_icons else []
     all_classes = []
 
     for root, dirs, files in os.walk(folder):
@@ -83,7 +83,7 @@ def get_classes(folder):
     return fa_classes
 
 
-def copy_css(output_path, css_file):
+def copy_css(output_path, css_file, extra_icons):
     """
     Copy css for only used icons over to output folder. Returns the css blocks
     corresponding to these icons so we know which icons to copy from the font
@@ -101,7 +101,7 @@ def copy_css(output_path, css_file):
         )
 
     css_blocks = []
-    for cls in get_classes(output_path):
+    for cls in get_classes(output_path, extra_icons):
         match = re.search(f'\.{cls}:before.*?}}', contents)
         if match:
             css_blocks.append(match.group(0))
@@ -129,6 +129,7 @@ def output_font(instance):
     css_blocks = copy_css(
         output_path,
         css_file,
+        instance.settings.get('FONTAWESOME_EXTRA', None)
     )
 
     copy_glyphs(
