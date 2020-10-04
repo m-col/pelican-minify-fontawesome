@@ -32,6 +32,7 @@ headers, i.e. put this into page templates:
 
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/fa.css"/>
 
+
 Additional icons
 ----------------
 
@@ -41,6 +42,7 @@ of their corresponding CSS references and this variable name:
 .. code-block:: python
 
    FONTAWESOME_EXTRA = ['fa-rss', 'fa-poo-storm']
+
 
 RST roles
 ---------
@@ -54,6 +56,7 @@ awesome icons in RST drafts:
    Here is a regular icon :far:`meh-rolling-eyes`
    Here is a brand icon :fab:`github`
 
+
 Troubleshooting
 ---------------
 
@@ -64,3 +67,9 @@ fonts, which will fix this. In Firefox this is Ctrl-F5 instead of just F5 to
 refresh.
 
 This plugin has only been tested with fontawesome-free-5.11.2-web so far.
+
+
+Contact
+-------
+
+Email me @ mcol@posteo.net for questions or contributions.
